@@ -1,27 +1,25 @@
 <template>
-  <div class="comment"
-       v-if="comment">
+  <div class="comment" v-if="comment">
     <div class="avatar">
       <img v-lazy="$utils.genImgUrl(comment.user.avatarUrl, 80)" />
     </div>
-    <div :class="{ border }"
-         class="content">
+    <div :class="{ border }" class="content">
       <p class="comment-text">
         <span class="username">{{ comment.user.nickname }}:</span>
         <span class="text">{{ comment.content }}</span>
       </p>
-      <div class="replied"
-           v-if="comment.beReplied.length">
+      <div class="replied" v-if="comment.beReplied.length">
         <p class="comment-text">
-          <span class="username">{{ comment.beReplied[0].user.nickname }}:</span>
+          <span class="username"
+            >{{ comment.beReplied[0].user.nickname }}:</span
+          >
           <span class="text">{{ comment.beReplied[0].content }}</span>
         </p>
       </div>
       <div class="bottom">
         <span class="date">{{ $utils.formatDate(comment.time) }}</span>
         <div class="actions">
-          <Icon :size="12"
-                type="good" />
+          <Icon :size="12" type="good" />
           {{ comment.likedCount }}
         </div>
       </div>

@@ -2,11 +2,13 @@
   <div class="with-pagination">
     <slot></slot>
     <div class="pagination-wrap">
-      <Pagination :current-page.sync="currentPage"
-                  :page-size="limit"
-                  :total="total"
-                  @current-change="onPageChange"
-                  class="pagination" />
+      <Pagination
+        :current-page.sync="currentPage"
+        :page-size="limit"
+        :total="total"
+        @current-change="onPageChange"
+        class="pagination"
+      />
     </div>
   </div>
 </template>
@@ -36,16 +38,16 @@ export default {
       default: 0
     }
   },
-  created () {
+  created() {
     this.onPageChange()
   },
-  data () {
+  data() {
     return {
       currentPage: 1
     }
   },
   methods: {
-    async onPageChange () {
+    async onPageChange() {
       try {
         const result = await this.getData({
           limit: this.limit,
@@ -65,7 +67,7 @@ export default {
   watch: {
     getDataParams: {
       deep: true,
-      handler () {
+      handler() {
         this.currentPage = 1
         this.onPageChange()
       }

@@ -1,43 +1,57 @@
 <template>
-  <div class="mvs"
-       ref="page">
+  <div
+    class="mvs"
+    ref="page"
+  >
     <div class="tabs-wrap">
       <span class="tabs-type">地区：</span>
-      <Tabs :tabs="areaTabs"
-            class="tabs"
-            type="split"
-            v-model="activeAreaTabIndex" />
+      <Tabs
+        :tabs="areaTabs"
+        class="tabs"
+        type="split"
+        v-model="activeAreaTabIndex"
+      />
     </div>
     <div class="tabs-wrap">
       <span class="tabs-type">类型：</span>
-      <Tabs :tabs="typeTabs"
-            class="tabs"
-            type="split"
-            v-model="activeTypeTabIndex" />
+      <Tabs
+        :tabs="typeTabs"
+        class="tabs"
+        type="split"
+        v-model="activeTypeTabIndex"
+      />
     </div>
     <div class="tabs-wrap">
       <span class="tabs-type">排序：</span>
-      <Tabs :tabs="sortTabs"
-            class="tabs"
-            type="split"
-            v-model="activeSortTabIndex" />
+      <Tabs
+        :tabs="sortTabs"
+        class="tabs"
+        type="split"
+        v-model="activeSortTabIndex"
+      />
     </div>
-    <WithPagination :getData="getAllMvs"
-                    :getDataParams="getDataParams"
-                    :limit="40"
-                    :scrollTarget="this.$refs && this.$refs.page"
-                    :total="mvCount"
-                    @getDataSuccess="onGetMvs">
+    <WithPagination
+      :getData="getAllMvs"
+      :getDataParams="getDataParams"
+      :limit="40"
+      :scrollTarget="this.$refs && this.$refs.page"
+      :total="mvCount"
+      @getDataSuccess="onGetMvs"
+    >
       <ul class="list-wrap">
-        <li :key="mv.id"
-            class="list-item"
-            v-for="mv in mvs">
-          <MvCard :author="mv.artistName"
-                  :duration="mv.duration"
-                  :id="mv.id"
-                  :img="mv.cover"
-                  :name="mv.name"
-                  :playCount="mv.playCount" />
+        <li
+          :key="mv.id"
+          class="list-item"
+          v-for="mv in mvs"
+        >
+          <MvCard
+            :author="mv.artistName"
+            :duration="mv.duration"
+            :id="mv.id"
+            :img="mv.cover"
+            :name="mv.name"
+            :playCount="mv.playCount"
+          />
         </li>
       </ul>
     </WithPagination>
@@ -53,13 +67,13 @@ const areaTabs = ["全部", "内地", "港台", "欧美", "日本", "韩国"]
 const typeTabs = ["全部", "官方版", "原声", "现场版", "网易出品"]
 const sortTabs = ["上升最快", "最热", "最新"]
 export default {
-  created () {
+  created() {
     this.areaTabs = areaTabs
     this.typeTabs = typeTabs
     this.sortTabs = sortTabs
     this.getAllMvs = getAllMvs
   },
-  data () {
+  data() {
     return {
       mvs: [],
       mvCount: 0,
@@ -69,7 +83,7 @@ export default {
     }
   },
   methods: {
-    onGetMvs ({ data, count }) {
+    onGetMvs({ data, count }) {
       this.mvs = data
       if (count) {
         this.mvCount = count
@@ -77,7 +91,7 @@ export default {
     }
   },
   computed: {
-    getDataParams () {
+    getDataParams() {
       return {
         area: areaTabs[this.activeAreaTabIndex],
         order: sortTabs[this.activeSortTabIndex],

@@ -1,26 +1,20 @@
 <template>
-  <div @click="goMv"
-       class="mv-card">
+  <div @click="goMv" class="mv-card">
     <div class="img-wrap">
       <img v-lazy="$utils.genImgUrl(img, 500, 260)" />
-      <div class="play-count-wrap"
-           v-if="playCount">
+      <div class="play-count-wrap" v-if="playCount">
         <Icon type="play" />
         {{ $utils.formatNumber(playCount) }}
       </div>
       <div class="play-icon-wrap">
-        <PlayIcon :size="48"
-                  class="play-icon" />
+        <PlayIcon :size="48" class="play-icon" />
       </div>
-      <div class="duration-wrap"
-           v-if="duration">
+      <div class="duration-wrap" v-if="duration">
         {{ $utils.formatTime(duration / 1000) }}
       </div>
     </div>
-    <p class="name"
-       v-if="name">{{ name }}</p>
-    <p class="author"
-       v-if="author">{{ author }}</p>
+    <p class="name" v-if="name">{{ name }}</p>
+    <p class="author" v-if="author">{{ author }}</p>
   </div>
 </template>
 
@@ -29,7 +23,7 @@ import { isDef } from "@/utils"
 export default {
   props: ["id", "img", "duration", "playCount", "name", "author"],
   methods: {
-    goMv () {
+    goMv() {
       // 如果传入id 则点击直接跳转mv页面
       if (isDef(this.id)) {
         this.$router.push(`/mv/${this.id}`)

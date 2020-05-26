@@ -1,30 +1,44 @@
 <template>
-  <Toggle :reserveDoms="reserveDoms"
-          :show="isPlaylistShow"
-          @update:show="setPlaylistShow(false)">
-    <div class="playlist"
-         ref="playlist"
-         v-show="isPlaylistShow">
-      <Tabs :tabs="tabs"
-            align="center"
-            v-model="activeTab" />
+  <Toggle
+    :reserveDoms="reserveDoms"
+    :show="isPlaylistShow"
+    @update:show="setPlaylistShow(false)"
+  >
+    <div
+      class="playlist"
+      ref="playlist"
+      v-show="isPlaylistShow"
+    >
+      <Tabs
+        :tabs="tabs"
+        align="center"
+        v-model="activeTab"
+      />
       <div class="header">
         <p class="total">总共{{dataSource.length}}首</p>
-        <div @click="clear"
-             class="remove"
-             v-if="dataSource.length">
+        <div
+          @click="clear"
+          class="remove"
+          v-if="dataSource.length"
+        >
           <Icon type="remove" />
           <span class="text">清空</span>
         </div>
       </div>
       <template>
-        <div class="song-table-wrap"
-             v-if="dataSource.length">
-          <SongTable :hideColumns="['index', 'img', 'albumName']"
-                     :songs="dataSource" />
+        <div
+          class="song-table-wrap"
+          v-if="dataSource.length"
+        >
+          <SongTable
+            :hideColumns="['index', 'img', 'albumName']"
+            :songs="dataSource"
+          />
         </div>
-        <div class="empty"
-             v-else>你还没有添加任何歌曲</div>
+        <div
+          class="empty"
+          v-else
+        >你还没有添加任何歌曲</div>
       </template>
     </div>
   </Toggle>
@@ -34,11 +48,11 @@
 import { mapState, mapMutations, mapActions } from "@/store/helper/music"
 import SongTable from "./song-table"
 export default {
-  mounted () {
+  mounted() {
     // 点击需要保留播放器的dom
     this.reserveDoms = [document.getElementById("mini-player")]
   },
-  data () {
+  data() {
     this.tabs = ["播放列表", "历史记录"]
     this.LIST_TAB = 0
     this.HISTORY_TAB = 1
@@ -49,7 +63,7 @@ export default {
     }
   },
   methods: {
-    clear () {
+    clear() {
       if (this.isPlaylist) {
         this.clearPlaylist()
       } else {
@@ -60,10 +74,10 @@ export default {
     ...mapActions(["clearCurrentSong", "clearPlaylist", "clearHistory"])
   },
   computed: {
-    dataSource () {
+    dataSource() {
       return this.isPlaylist ? this.playlist : this.playHistory
     },
-    isPlaylist () {
+    isPlaylist() {
       return this.activeTab === this.LIST_TAB
     },
     ...mapState(["isPlaylistShow", "playlist", "playHistory"])

@@ -4,31 +4,43 @@
       <Loading :loading="loading" />
     </template>
     <template v-else>
-      <div class="block"
-           v-if="shouldHotCommentShow">
+      <div
+        class="block"
+        v-if="shouldHotCommentShow"
+      >
         <p class="title">精彩评论</p>
-        <Comment :border="!$utils.isLast(index, hotComments)"
-                 :comment="comment"
-                 :key="comment.id"
-                 v-for="(comment, index) in hotComments" />
+        <Comment
+          :border="!$utils.isLast(index, hotComments)"
+          :comment="comment"
+          :key="comment.id"
+          v-for="(comment, index) in hotComments"
+        />
       </div>
-      <div class="block"
-           v-if="shouldCommentShow">
-        <p class="title"
-           ref="commentTitle">
+      <div
+        class="block"
+        v-if="shouldCommentShow"
+      >
+        <p
+          class="title"
+          ref="commentTitle"
+        >
           最新评论
           <span class="count">({{total}})</span>
         </p>
-        <Comment :border="!$utils.isLast(index, comments)"
-                 :comment="comment"
-                 :key="comment.id"
-                 v-for="(comment,index) in comments" />
+        <Comment
+          :border="!$utils.isLast(index, comments)"
+          :comment="comment"
+          :key="comment.id"
+          v-for="(comment,index) in comments"
+        />
       </div>
-      <Pagination :current-page.sync="currentPage"
-                  :page-size="PAGE_SIZE"
-                  :total="total"
-                  @current-change="onPageChange"
-                  class="pagination" />
+      <Pagination
+        :current-page.sync="currentPage"
+        :page-size="PAGE_SIZE"
+        :total="total"
+        @current-change="onPageChange"
+        class="pagination"
+      />
     </template>
     <empty v-if="!loading && !shouldHotCommentShow && !shouldCommentShow">还没有评论哦~</empty>
   </div>
@@ -61,10 +73,10 @@ export default {
       default: SONG_TYPE
     }
   },
-  created () {
+  created() {
     this.PAGE_SIZE = PAGE_SIZE
   },
-  data () {
+  data() {
     return {
       loading: false,
       hotComments: [],
@@ -74,7 +86,7 @@ export default {
     }
   },
   methods: {
-    async getComment () {
+    async getComment() {
       this.loading = true
       const commentRequestMap = {
         [PLAYLIST_TYPE]: getPlaylistComment,
@@ -105,7 +117,7 @@ export default {
       this.total = total
       this.$emit("update", { comments, hotComments, total })
     },
-    async onPageChange () {
+    async onPageChange() {
       await this.getComment()
       this.$nextTick(() => {
         scrollInto(this.$refs.commentTitle)
@@ -114,7 +126,7 @@ export default {
   },
   watch: {
     id: {
-      handler (newId) {
+      handler(newId) {
         if (newId) {
           this.currentPage = 1
           this.getComment()
@@ -124,10 +136,10 @@ export default {
     }
   },
   computed: {
-    shouldHotCommentShow () {
+    shouldHotCommentShow() {
       return this.hotComments.length > 0 && this.currentPage === 1
     },
-    shouldCommentShow () {
+    shouldCommentShow() {
       return this.comments.length > 0
     }
   },

@@ -1,14 +1,12 @@
 // mv详情页面
 <template>
-  <div class="mv"
-       v-if="$utils.isDef(mvDetail.id)">
+  <div class="mv" v-if="$utils.isDef(mvDetail.id)">
     <div class="mv-content">
       <div class="left">
         <p class="title">mv详情</p>
 
         <div class="player">
-          <VideoPlayer :url="mvPlayInfo.url"
-                       ref="video" />
+          <VideoPlayer :url="mvPlayInfo.url" ref="video" />
         </div>
 
         <div class="author-wrap">
@@ -21,30 +19,35 @@
         <p class="name">{{ mvDetail.name }}</p>
 
         <div class="desc">
-          <span class="date">发布：{{
+          <span class="date"
+            >发布：{{
               $utils.formatDate(mvDetail.publishTime, "yyyy-MM-dd")
-            }}</span>
+            }}</span
+          >
           <span class="count">播放：{{ mvDetail.playCount }}次</span>
         </div>
 
         <div class="comments">
-          <Comments :id="id"
-                    type="mv" />
+          <Comments :id="id" type="mv" />
         </div>
       </div>
       <div class="right">
         <p class="title">相关推荐</p>
         <div class="simi-mvs">
-          <Card :desc="`by ${simiMv.artistName}`"
-                :key="simiMv.id"
-                :name="simiMv.name"
-                @click="$utils.goMv(simiMv.id)"
-                class="simi-mv-card"
-                v-for="simiMv in simiMvs">
+          <Card
+            :desc="`by ${simiMv.artistName}`"
+            :key="simiMv.id"
+            :name="simiMv.name"
+            @click="$utils.goMv(simiMv.id)"
+            class="simi-mv-card"
+            v-for="simiMv in simiMvs"
+          >
             <template #img-wrap>
-              <MvCard :duration="simiMv.duration"
-                      :img="simiMv.cover"
-                      :playCount="simiMv.playCount" />
+              <MvCard
+                :duration="simiMv.duration"
+                :img="simiMv.cover"
+                :playCount="simiMv.playCount"
+              />
             </template>
           </Card>
         </div>
@@ -68,15 +71,15 @@ export default {
       required: true
     }
   },
-  metaInfo () {
+  metaInfo() {
     return {
       title: this.mvDetail.name
     }
   },
-  created () {
+  created() {
     this.init()
   },
-  data () {
+  data() {
     return {
       mvDetail: {},
       mvPlayInfo: "",
@@ -85,7 +88,7 @@ export default {
     }
   },
   methods: {
-    async init () {
+    async init() {
       const [
         { data: mvDetail },
         { data: mvPlayInfo },
@@ -112,7 +115,7 @@ export default {
         })
       })
     },
-    goMv (id) {
+    goMv(id) {
       this.$router.push(`/mv/${id}`)
     },
     ...mapMutations(["setPlayingState"])
@@ -123,7 +126,7 @@ export default {
   components: { Comments, MvCard }
 }
 
-function genResource (brs, mvPlayInfo) {
+function genResource(brs, mvPlayInfo) {
   const { url: mvPlayInfoUrl, r: mvPlayInfoBr } = mvPlayInfo
   const keyNameMap = {
     "240": "标清",

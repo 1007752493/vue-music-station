@@ -22,7 +22,7 @@ export default {
       type: Function,
     },
   },
-  data () {
+  data() {
     const commonHighLightSlotScopes = {
       default: scope => {
         const text = scope.row[scope.column.property]
@@ -48,9 +48,9 @@ export default {
                   {this.isActiveSong(scope.row) ? (
                     <Icon class="horn" type="horn" color="theme" />
                   ) : (
-                      // 补上左边的0
-                      <span>{pad(scope.$index + 1)}</span>
-                    )}
+                    // 补上左边的0
+                    <span>{pad(scope.$index + 1)}</span>
+                  )}
                 </div>
               )
             },
@@ -134,14 +134,14 @@ export default {
     }
   },
   methods: {
-    onRowClick (song) {
+    onRowClick(song) {
       this.startSong(song)
       this.setPlaylist(this.songs)
     },
-    isActiveSong (song) {
+    isActiveSong(song) {
       return song.id === this.currentSong.id
     },
-    tableCellClassName (args) {
+    tableCellClassName(args) {
       const { row, columnIndex } = args
       const cellClassNameProp = this.$attrs.cellClassName
 
@@ -156,7 +156,7 @@ export default {
       if (
         this.isActiveSong(row) &&
         columnIndex ===
-        this.showColumns.findIndex(({ prop }) => prop === "name")
+          this.showColumns.findIndex(({ prop }) => prop === "name")
       ) {
         retCls.push("song-active")
       }
@@ -166,7 +166,7 @@ export default {
     ...mapActions(["startSong"]),
   },
   computed: {
-    showColumns () {
+    showColumns() {
       const hideColumns = this.hideColumns.slice()
       const reference = this.songs[0]
       const { img } = reference
@@ -179,7 +179,7 @@ export default {
     },
     ...mapState(["currentSong"]),
   },
-  render () {
+  render() {
     const elTableProps = ElTable.props
     // 从$attrs里提取作为prop的值
     const { props, attrs } = genPropsAndAttrs(this.$attrs, elTableProps)
@@ -214,7 +214,7 @@ export default {
   },
 }
 
-function genPropsAndAttrs (rawAttrs, componentProps) {
+function genPropsAndAttrs(rawAttrs, componentProps) {
   const props = {}
   const attrs = {}
   Object.keys(rawAttrs).forEach(key => {

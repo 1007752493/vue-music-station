@@ -1,38 +1,33 @@
 // 歌单详情页面
 <template>
-  <div class="playlist-detail"
-       v-if="playlist.id">
-    <DetailHeader ref="header"
-                  :playlist="playlist"
-                  :songs="songs" />
+  <div class="playlist-detail" v-if="playlist.id">
+    <DetailHeader ref="header" :playlist="playlist" :songs="songs" />
     <div class="tabs-wrap">
-      <Tabs :tabs="tabs"
-            type="theme"
-            v-model="activeTab" />
-      <el-input :class="getInputCls()"
-                @blur="onInputBlur"
-                @focus="onInputFocus"
-                class="input"
-                placeholder="搜索歌单音乐"
-                prefix-icon="el-icon-search"
-                v-model="searchValue"
-                v-show="activeTab === SONG_IDX"></el-input>
+      <Tabs :tabs="tabs" type="theme" v-model="activeTab" />
+      <el-input
+        :class="getInputCls()"
+        @blur="onInputBlur"
+        @focus="onInputFocus"
+        class="input"
+        placeholder="搜索歌单音乐"
+        prefix-icon="el-icon-search"
+        v-model="searchValue"
+        v-show="activeTab === SONG_IDX"
+      ></el-input>
     </div>
-    <div class="empty"
-         v-if="searchValue && !filteredSongs.length">
+    <div class="empty" v-if="searchValue && !filteredSongs.length">
       未能找到和
       <span class="keyword">“{{ searchValue }}”</span>
       相关的任何音乐
     </div>
-    <SongTable :highlightText="searchValue"
-               :songs="filteredSongs"
-               class="table"
-               v-show="activeTab === SONG_IDX" />
-    <div class="comments"
-         v-show="activeTab === COMMENT_IDX">
-      <Comments :id="id"
-                @update="onCommentsUpdate"
-                type="playlist" />
+    <SongTable
+      :highlightText="searchValue"
+      :songs="filteredSongs"
+      class="table"
+      v-show="activeTab === SONG_IDX"
+    />
+    <div class="comments" v-show="activeTab === COMMENT_IDX">
+      <Comments :id="id" @update="onCommentsUpdate" type="playlist" />
     </div>
   </div>
 </template>
@@ -49,16 +44,16 @@ const MAX = 500
 const SONG_IDX = 0
 const COMMENT_IDX = 1
 export default {
-  metaInfo () {
+  metaInfo() {
     return {
       title: this.playlist.name,
     }
   },
-  async created () {
+  async created() {
     this.SONG_IDX = SONG_IDX
     this.COMMENT_IDX = COMMENT_IDX
   },
-  data () {
+  data() {
     return {
       tabs: ["歌曲列表", "评论"],
       activeTab: SONG_IDX,
@@ -69,12 +64,12 @@ export default {
     }
   },
   methods: {
-    async init () {
+    async init() {
       const { playlist } = await getListDetail({ id: this.id })
       this.playlist = playlist
       this.genSonglist(playlist)
     },
-    async genSonglist (playlist) {
+    async genSonglist(playlist) {
       const trackIds = playlist.trackIds.map(({ id }) => id)
       const songDetails = await getSongDetail(trackIds.slice(0, MAX))
       const songs = songDetails.songs.map(({ id, name, al, ar, mv, dt }) =>
@@ -90,19 +85,19 @@ export default {
       )
       this.songs = songs
     },
-    onCommentsUpdate ({ total }) {
+    onCommentsUpdate({ total }) {
       this.tabs.splice(COMMENT_IDX, 1, `评论(${total})`)
     },
-    onInputFocus () {
+    onInputFocus() {
       this.inputFocus = true
     },
-    onInputBlur () {
+    onInputBlur() {
       this.inputFocus = false
     },
-    getInputCls () {
+    getInputCls() {
       return !this.inputFocus ? "inactive" : ""
     },
-    scrollToHeader () {
+    scrollToHeader() {
       const { header } = this.$refs
       if (header) {
         scrollInto(header.$el)
@@ -110,10 +105,10 @@ export default {
     },
   },
   computed: {
-    id () {
+    id() {
       return Number(this.$route.params.id)
     },
-    filteredSongs () {
+    filteredSongs() {
       return this.songs.filter(({ name, artistsText, albumName }) =>
         `${name}${artistsText}${albumName}`
           .toLowerCase()
@@ -123,7 +118,7 @@ export default {
   },
   watch: {
     id: {
-      handler () {
+      handler() {
         this.searchValue = ""
         this.init()
         this.scrollToHeader()

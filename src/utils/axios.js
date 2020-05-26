@@ -1,10 +1,6 @@
 import axios from 'axios'
-import {
-  Loading
-} from 'element-ui'
-import {
-  confirm
-} from '@/base/confirm'
+import { Loading } from 'element-ui'
+import { confirm } from '@/base/confirm'
 import store from '@/store'
 
 const BASE_URL = 'https://api.mtnhao.com/'
@@ -37,7 +33,6 @@ function handleResponse(response) {
 let loading
 let loadingCount = 0
 const SET_AXIOS_LOADING = 'global/setAxiosLoading'
-
 function mixinLoading(interceptors) {
   interceptors.request.use(loadingRequestInterceptor)
   interceptors.response.use(

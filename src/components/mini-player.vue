@@ -197,6 +197,7 @@ export default {
     togglePlayerShow () {
       this.setPlayerShow(!this.isPlayerShow)
     },
+
     ...mapMutations([
       "setCurrentTime",
       "setPlayingState",
